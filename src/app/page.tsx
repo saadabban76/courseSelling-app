@@ -4,13 +4,16 @@ import AuthButtons from "@/components/AuthButtons";
 
 export default function Home() {
   return (
-    <main className="bg-background w-full h-[100vh]">
-      sdfsdfdsfd
-      {/* <Navbar />
-      <section className="flex justify-between items-center p-10">
-        <div className="flex flex-col gap-3">
-          <h1 className="text-[1.4rem] xl:text-[1.8rem]">Coursera Admin</h1>
-          <h3>A Place to Learn, earn and grow</h3>
+    <main className="bg-[#191919] text-white h-[100vh] w-full">
+      <Navbar />
+      <section className="flex justify-between items-center 
+      
+      xl:px-56 p-10">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-[2.6rem] font-bold xl:text-[2.9rem]">
+            Coursera Admin
+          </h1>
+          <h3 className="pb-5">A Place to Learn, earn and grow</h3>
           <AuthButtons />
         </div>
         <div>
@@ -18,12 +21,13 @@ export default function Home() {
             src={
               "https://img.freepik.com/free-vector/empty-classroom-interior-with-chalkboard_1308-65378.jpg"
             }
-            width={500}
+            className="rounded-md xl:h-[400px] xl:w-[770px]"
+            width={450}
             height={400}
             alt={"course-image"}
           />
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }

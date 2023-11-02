@@ -1,5 +1,4 @@
 import AuthButtons from "@/components/AuthButtons";
-import { Button } from "@/components/ui/button";
 import React from "react";
 
 const Navbar = () => {
