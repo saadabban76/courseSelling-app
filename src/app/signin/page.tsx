@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { GET } from "../api/hello/route";
 
-const page = () => {
+const SignIn = () => {
+  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState("");
+
   return (
     <main className="bg-[#191919] h-[100vh]">
       <BackButton />
@@ -30,12 +32,24 @@ const page = () => {
         >
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <label htmlFor="email">Email</label>
-            <Input type="email" id="email" placeholder="Email" />
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              id="email"
+              placeholder="Email"
+            />
           </div>
           <br />
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <label htmlFor="password">Password</label>
-            <Input type="password" id="password" placeholder="password" />
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              id="password"
+              placeholder="password"
+            />
           </div>
           <div className="ml-28 self-start text-gray-300">
             <p className="mt-4 self-start">
@@ -58,33 +72,18 @@ const page = () => {
           className="bg-blue-400 px-8 text-white hover:text-black"
           variant="secondary"
           onClick={async () => {
-            let response  = await fetch("/api/hello", {
+            const response = fetch(`api/signup`, {
               method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
               body: JSON.stringify({
-                name: "saad",
-                age: 24,
+                username: email,
+                password: password,
               }),
             });
-            if (response) {
-              const data = await response.json();
-              console.log('data : ', data.body);
-            }
-            // console.log("hi : ", hi.json().then(data=> data));
-            // .then((res) =>
-            //   res.json().then((data) => {
-            //     console.log("data : ", data);
-            //   })
-            // )
-            // .catch((err) => console.log(err));
-            // console.log('hello : ', hi.text);
-            // const response = await axios.post(`${BASE_URL}/admin/signup`, {
-            //   username: email,
-            //   password: password,
-            // });
-            // let data = response.data;
-            // localStorage.setItem("token", data.token);
-            // setUser({ userEmail: email, isLoading: false });
-            // router.push("/courses");
+            let data = (await response).json();
+            console.log("data : ", data);
           }}
         >
           {" "}
@@ -95,4 +94,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignIn;

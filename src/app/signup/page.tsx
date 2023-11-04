@@ -1,10 +1,49 @@
+"use client";
+
 import React from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import BackButton from "@/components/BackButton";
+import { z } from "zod";
 // import { Label } from "@/components/ui/label";
 
-const page = () => {
+const SignUP = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signupInputs = z.object({
+    username: z.string().email(),
+    password: z.string().min(4),
+  });
+
+  const signupHandler = async () => {
+    // const zodAuth = signupInputs.safeParse({ email, password }); // zod authentication in frontend
+    // console.log('zodAuth : ', { email, password });
+
+    // if (!zodAuth.success) {
+    //   alert("invalid username or password");
+    //   return;
+    // }
+
+    const response = fetch(`api/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    let data = (await response).json();
+    console.log("data : ", data);
+    // localStorage.setItem("token", data);
+    // window.location = "/"
+    // setUser({ userEmail: email, isLoading: false });
+    // router.push("/courses");
+  };
+
   return (
     <main className="bg-[#191919] h-[100vh]">
       <BackButton />
@@ -23,12 +62,24 @@ const page = () => {
       <div className="pt-7 inherit flex flex-col items-center gap-0">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <label htmlFor="email">Email</label>
-          <Input type="email" id="email" placeholder="Email" />
+          <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            id="email"
+            placeholder="Email"
+          />
         </div>
         <br />
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <label htmlFor="password">Password</label>
-          <Input type="password" id="password" placeholder="password" />
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            id="password"
+            placeholder="password"
+          />
         </div>
         <br />
         <br />
@@ -37,17 +88,7 @@ const page = () => {
           //   size={"large"}
           className="bg-blue-400 px-8 text-white hover:text-black"
           variant="secondary"
-          //   onClick={async () => {
-          //     const response = await axios.post(`${BASE_URL}/admin/signup`, {
-          //       username: email,
-          //       password: password,
-          //     });
-          //     let data = response.data;
-          //     localStorage.setItem("token", data.token);
-          //     // window.location = "/"
-          //     setUser({ userEmail: email, isLoading: false });
-          //     router.push("/courses");
-          //   }}
+          onClick={signupHandler}
         >
           {" "}
           Signup
@@ -57,4 +98,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignUP;
